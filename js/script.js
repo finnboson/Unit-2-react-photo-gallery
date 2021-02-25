@@ -3,7 +3,6 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-starting script
 
 /*
 For assistance:
@@ -20,6 +19,37 @@ This function will create and insert/append the elements needed to display a "pa
 
 
 
+function showPage (list, page) {
+   let startIndex = (page * 9) - 9;
+   let endIndex = page * 9;
+   const studentList = document.querySelector('.student-list');
+   studentList.innerHTML = '';
+   for (let i = 0; i < list.length; i ++)
+      if (i >= startIndex && i < endIndex ) {
+         studentName = `${list[i].name.title} ${list[i].name.first} ${list[i].name.last}`
+         emailAddress = list[i].email;
+         image = list[i].picture.large;
+         registered = list[i].registered.date;
+      studentList.insertAdjacentHTML('beforeend', 
+      `<li class='student-item'>
+         <div class='student-details'>
+            <img class='avatar' src=${image} alt='Profile Picture'>
+               <h3 class='student-item h3'>${studentName}</h3>
+               <span class='email'>${emailAddress}</span>
+            </div>
+         <div class='joined-details'>
+            <span class='date'>Joined ${registered}</span>
+         </div>
+         </li>` )
+ }
+}
+
+showPage(data, 1);
+
+
+
+
+
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
@@ -27,4 +57,4 @@ This function will create and insert/append the elements needed for the paginati
 
 
 
-// Call functions
+// Call functions 
