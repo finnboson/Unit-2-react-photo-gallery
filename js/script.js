@@ -13,8 +13,13 @@ For assistance:
 
 
 /*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
+This function accepts two parameters as arguments: 1) an array of objects; 2) a page number.
+The startIndex and endIndex calculate how many list items I want to display on the page.
+Then I select the ul element I want to place the list items into and first set it's html value to 
+an empty string. Then looping through the list items for the given number of items I want to 
+display on the page, I declare the values of each element I want to display with each list item.
+Then using the insertAdjacent method and beforeend option I insert each list item inside the
+empty html string, one after the other.   
 */
 
 function showPage (list, page) {
@@ -79,3 +84,37 @@ function addPagination(list) {
 // Call functions 
 showPage(data, 1);
 addPagination(data);
+
+
+const header = document.querySelector('.header');
+const h2 = header.firstElementChild;
+h2.insertAdjacentHTML ('afterend',
+   `<label ="search" class="student-search">
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+ </label>`
+);
+
+const searchInput = document.getElementById('search');
+const searchButton = searchInput.nextElementSibling;
+let studentList = document.getElementsByClassName('student-list');
+
+let newList = [];
+
+searchButton.addEventListener ('click', (e) => {
+   e.preventDefault();
+   for (let i=0; i < studentList.length; i++) {
+      let studentName = `${studentList[i]}.querySelector('h3')`;
+      studentName.toLowerCase();
+      let inputValue = searchInput.value.toLowerCase();
+       if (inputValue.length !== 0 && studentName.includes(inputValue)) {
+         newList.push(`${studentList[i]}`)
+      }
+       showPage(newList, 1);  
+    }
+});
+
+searchInput.addEventListener('keyup', () => {
+
+   
+})
