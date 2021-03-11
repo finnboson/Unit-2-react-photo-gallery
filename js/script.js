@@ -22,6 +22,7 @@ Then using the insertAdjacent method and beforeend option I insert each list ite
 empty html string, one after the other.   
 */
 
+
 function showPage (list, page) {
    let startIndex = (page * 9) - 9;
    let endIndex = page * 9;
@@ -29,7 +30,7 @@ function showPage (list, page) {
    studentList.innerHTML = '';
    for (let i = 0; i < list.length; i ++)
       if (i >= startIndex && i < endIndex ) {
-         studentName = `${list[i].name.title} ${list[i].name.first} ${list[i].name.last}`
+         studentName = `${list[i].name.title} ${list[i].name.first} ${list[i].name.last}`;
          emailAddress = list[i].email;
          image = list[i].picture.large;
          registered = list[i].registered.date;
@@ -48,8 +49,12 @@ function showPage (list, page) {
 }
 
 /*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+This function accepts one parameter: the list of students in data.js. First I calculate the 
+number of pages there will be by dividing the student items by 9. Then using the Match.round
+method I round up to the nearest whole number. I then select the ul element where the pagination 
+buttons will be inserted into and set it's innerHTML to an empty string. I then loop over the 
+rounded number of pages variable and insert the page number buttons using the insertAdjacentHTM
+method. 
 */
 
 function addPagination(list) {
@@ -64,9 +69,18 @@ function addPagination(list) {
       </li>`)
    }
  
+   /*Here I select the first page number button and set it's class name to active since it
+   will be active by default
+   */
    let firstButton = linkList.firstElementChild.firstElementChild;
    firstButton.className = 'active';
-   
+   /* 
+   Here I create an event listener to listen for clicks on buttons within the link-list ul
+   element. I then loop over the page number buttons removing the class of active from all 
+   buttons except the one being clicked. I then call the showPage function and pass in the
+   list of students and the page number of the clicked button as arguments. This displays only
+   the students on the page number that is selected.
+   */
    linkList.addEventListener('click', (e) => {
       let clickedButton = e.target;
       if (clickedButton.tagName == 'BUTTON') {
@@ -81,40 +95,9 @@ function addPagination(list) {
 }
 
 
-// Call functions 
+// Finally, I call the two functions.
 showPage(data, 1);
 addPagination(data);
 
 
-const header = document.querySelector('.header');
-const h2 = header.firstElementChild;
-h2.insertAdjacentHTML ('afterend',
-   `<label ="search" class="student-search">
-   <input id="search" placeholder="Search by name...">
-   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
- </label>`
-);
 
-const searchInput = document.getElementById('search');
-const searchButton = searchInput.nextElementSibling;
-let studentList = document.getElementsByClassName('student-list');
-
-let newList = [];
-
-searchButton.addEventListener ('click', (e) => {
-   e.preventDefault();
-   for (let i=0; i < studentList.length; i++) {
-      let studentName = `${studentList[i]}.querySelector('h3')`;
-      studentName.toLowerCase();
-      let inputValue = searchInput.value.toLowerCase();
-       if (inputValue.length !== 0 && studentName.includes(inputValue)) {
-         newList.push(`${studentList[i]}`)
-      }
-       showPage(newList, 1);  
-    }
-});
-
-searchInput.addEventListener('keyup', () => {
-
-   
-})
